@@ -10,6 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+
 builder.Services.AddDbContext<BlazorAppDbContext>(options =>
 {
     options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=BlazorAppDb;Trusted_Connection=True;");
@@ -33,7 +34,10 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAntiforgery();
+
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
