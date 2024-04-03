@@ -1,0 +1,60 @@
+﻿@using BlazorApp.Models
+@using Microsoft.EntityFrameworkCore
+@inject BlazorAppDbContext context
+@attribute [StreamRendering]
+@page "/partsbycolor"
+
+<h2 class="my-5 color-title">Part Count by Colors Used in Official Lego Sets</h2>
+
+@if (partCountByColors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Color</th>
+                <th>Part Count</th>
+            </tr>
+            @foreach (var partCountByColor in partCountByColors)
+            {
+                <tr>
+                    <td>@partCountByColor.ColorName</td>
+                    <td>@partCountByColor.PartCount</td>
+                </tr>
+            }
+        </thead>
+    </table>
+}
+
+@code {
+    public class PartCountByColor
+    {
+        public string ColorName { get; set; }
+        public int PartCount { get; set; }
+
+        public PartCountByColor(string colorName, int partCount)
+        {
+            ColorName = colorName;
+            PartCount = partCount;
+        }
+    }
+
+    private List<PartCountByColor>? partCountByColors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var colors = context.Colors;
+        var ip = context.InventoryParts;
+
+        var colorNamePartCount = ip
+                .Join(colors, ip => ip.ColorNameId, c => c.ColorNameId, (ip, c) => new { ip, c })
+                .GroupBy(x => x.c.Name)
+                .Select(g => new { ColorName = g.Key, PartCount = g.Count() })
+                .OrderByDescending(x => x.PartCount);
+
+        partCountByColors = await colorNamePartCount.Select(x => new PartCountByColor(x.ColorName, x.PartCount)).ToListAsync();
+    }
+}
