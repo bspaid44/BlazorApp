@@ -12,6 +12,15 @@ namespace BlazorApp.Models
         public DbSet<Color> Colors { get; set; }
         public DbSet<InventoryPart> InventoryParts { get; set; }
 
+        public BlazorAppDbContext(DbContextOptions<BlazorAppDbContext> options)
+        : base(options)
+        {
+        }
+
+        public BlazorAppDbContext()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=BlazorAppDb;Trusted_Connection=True;");

@@ -1,0 +1,43 @@
+﻿@using BlazorApp.Models
+@using Microsoft.EntityFrameworkCore
+@inject BlazorAppDbContext context
+
+@page "/colors"
+<h2 class="my-5 color-title">Colors Used in Official Lego Sets</h2>
+
+@if (colors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>RGB</th>
+                <th>Name</th>
+                <th>Color</th>
+            </tr>
+            @foreach (var color in colors)
+            {
+                <tr>
+                    <td>@color.RGB</td>
+                    <td>@color.Name</td>
+                    <td style="background-color: #@color.RGB; color: #@color.RGB">@color.Name</td>
+                </tr>
+            }
+        </thead>
+    </table>
+}
+
+
+@code {
+    private List<Color>? colors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        colors = await context.Colors.ToListAsync();
+    }
+
+}
+

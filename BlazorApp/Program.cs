@@ -1,6 +1,7 @@
 using BlazorApp.Client.Pages;
 using BlazorApp.Components;
 using BlazorApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,13 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddDbContext<BlazorAppDbContext>(options =>
+{
+    options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=BlazorAppDb;Trusted_Connection=True;");
+});
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
