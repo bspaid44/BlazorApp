@@ -8,30 +8,89 @@
 
 <div class="container main-home">
     <div class="row d-flex justify-content-center">
-        <RadzenCard class="main-card" Style="width:60%; height:40%; background-color:aliceblue">
-            <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
-                <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Welcome</RadzenText>
-                <RadzenStack Gap="1rem">
-                    <div class="rz-p-12">
-                        <RadzenText TextAlign="TextAlign.Center">This is a Blazor WebAssembly app that uses Entity Framework Core to display data from a Lego database.</RadzenText>
-                    </div>
-                </RadzenStack>
-                <RadzenCard Style="min-height:200px; background-color:antiquewhite">
-                    <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
-                        <RadzenImage Path="images/legoabbeyroad.jpg" Style="width:100%; height:100%;"></RadzenImage>
+        <RadzenRow>
+            <RadzenColumn Size="6">
+                <RadzenCard class="main-card-welcome rz-border-radius-4 rz-shadow-9" Style="background-color:aliceblue">
+                    <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Start" Gap="1rem">
+                        <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Welcome</RadzenText>
+                        <RadzenStack Gap="1rem">
+                            <div class="rz-p-12">
+                                <RadzenText TextAlign="TextAlign.Center">This is a Blazor WebAssembly app that uses Entity Framework Core to display data from a Lego database.</RadzenText>
+                            </div>
+                        </RadzenStack>
+                        <RadzenCard Style="min-height:200px; background-color:antiquewhite">
+                            <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                                <RadzenImage Path="images/legoabbeyroad.jpg" Style="width:100%; height:100%;"></RadzenImage>
+                            </RadzenStack>
+                        </RadzenCard>
                     </RadzenStack>
                 </RadzenCard>
-            </RadzenStack>
-        </RadzenCard>
+            </RadzenColumn>
+            <RadzenColumn Size="3">
+                <RadzenStack Gap="10px">
+                    <RadzenCard class="main-card rz-border-radius-6 rz-shadow-9" Style="background-color: lawngreen; max-height: 267px">
+                        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
+                            <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Themes</RadzenText>
+                            <RadzenStack Gap="1rem">
+                                <div class="rz-p-12">
+                                    <RadzenText TextAlign="TextAlign.Center">There are currently @totalThemes themes in the database.</RadzenText>
+                                </div>
+                            </RadzenStack>
+                        </RadzenStack>
+                    </RadzenCard>
+                    <RadzenCard class="main-card rz-border-radius-6 rz-shadow-9" Style="background-color:red; max-height: 267px">
+                        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
+                            <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Sets</RadzenText>
+                            <RadzenStack Gap="1rem">
+                                <div class="rz-p-12">
+                                    <RadzenText TextAlign="TextAlign.Center">There are currently @totalSets sets in the database.</RadzenText>
+                                </div>
+                            </RadzenStack>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn Size="3"> 
+                <RadzenStack Gap="10px">
+                    <RadzenCard class="main-card rz-border-radius-6 rz-shadow-9" Style="background-color:dodgerblue; max-height: 267px">
+                        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
+                            <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Parts</RadzenText>
+                            <RadzenStack Gap="1rem">
+                                <div class="rz-p-12">
+                                    <RadzenText TextAlign="TextAlign.Center">There are currently @totalParts unique parts in the database.</RadzenText>
+                                </div>
+                            </RadzenStack>
+                        </RadzenStack>
+                    </RadzenCard>
+                    <RadzenCard class="main-card rz-border-radius-6 rz-shadow-9" Style="background-color:yellow; max-height: 267px">
+                        <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
+                            <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Colors</RadzenText>
+                            <RadzenStack Gap="1rem">
+                                <div class="rz-p-12">
+                                    <RadzenText TextAlign="TextAlign.Center">There are currently @totalColors colors in the database.</RadzenText>
+                                </div>
+                            </RadzenStack>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+        
     </div>
 </div>
 
 @code {
     private int totalSets;
+    private int totalThemes;
+    private int totalParts;
+    private int totalColors;
 
     protected override async Task OnInitializedAsync()
     {
         totalSets = await context.Sets.CountAsync();
+        totalThemes = await context.Themes.CountAsync();
+        totalParts = await context.Parts.CountAsync();
+        totalColors = await context.Colors.CountAsync();
     }
 }
 

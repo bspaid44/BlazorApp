@@ -60,4 +60,8 @@ tr:hover {
     text-shadow: 1px 1px 1px #000;
 }
 
+.main-card:hover {
+    transform: scale(1.05) rotate(360deg);
+    transition: transform 0.35s;
+}
 
