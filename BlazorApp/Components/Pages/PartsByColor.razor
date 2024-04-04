@@ -8,6 +8,9 @@
 <h2 class="color-title">Part Count by Colors Used in Official Lego Sets</h2>
 
 <div Class="rz-p-0 rz-p-md-12" style="background-color:aliceblue">
+    <RadzenCard class="mt-4 w-100 mb-4 d-flex justify-content-center align-items-center text-center" Style="width:150px; background-color:lightsteelblue">
+        <RadzenLabel Text="Top 10 Colors Used in Official Lego Sets" Style="font-size:1.5rem;  margin-right:90px;" class="color-title" />
+    </RadzenCard>
     <RadzenChart Style="height:500px">
         <RadzenPieSeries Title="Part Count" Data="@partCountByColorsChart" CategoryProperty="ColorName" ValueProperty="PartCount" Fills="@(new [] {"#000000","#ffffff","#cccccc", "#ff0000", "#8c8c8c", "#ffff00", "#0000ff", "#f2f2f2", "#d04949", "#d2b48c"})" />
     </RadzenChart>
@@ -25,7 +28,7 @@ else
         <thead>
             <tr>
                 <th>Color</th>
-                <th>Part Count</th>
+                <th>Unique Part Count</th>
             </tr>
             @foreach (var partCountByColor in partCountByColors)
             {
