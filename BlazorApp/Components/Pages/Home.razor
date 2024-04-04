@@ -3,6 +3,22 @@
 <PageTitle>Home</PageTitle>
 
 <div class="container main-home">
-    <p>Welcome</p>
+    <div class="row d-flex justify-content-start">
+        <RadzenCard class="main-card" Style="max-width:620px; min-height:400px; background-color:aliceblue">
+            <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem">
+                <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center" class="color-title">Welcome</RadzenText>
+                <RadzenStack Gap="1rem">
+                    <RadzenText TextStyle="TextStyle.Body2">
+                        This is a simple Lego database that shows the colors used in official Lego sets, the official Lego sets, and the part count by colors used in official Lego sets.
+                    </RadzenText>
+                </RadzenStack>
+                <RadzenCard Style="min-height:200px; background-color:antiquewhite">
+                    <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                        <RadzenImage Path="images/legoabbeyroad.jpg" Style="width:100%; height:100%;"></RadzenImage>
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenStack>
+        </RadzenCard>
+    </div>
 </div>
 
