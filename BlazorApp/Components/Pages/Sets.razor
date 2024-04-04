@@ -1,0 +1,102 @@
+﻿@using BlazorApp.Models
+@using Microsoft.EntityFrameworkCore
+@inject BlazorAppDbContext context
+@rendermode RenderMode.InteractiveServer
+
+@page "/sets"
+
+<h2 class="color-title">Official Lego Sets</h2>
+
+@if (setList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="form-group">
+        <input class="form-control" type="text" placeholder="Filter for name" 
+                @bind="Filter" 
+                @bind:event="oninput" />
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Set Name</th>
+                <th>Number of Parts</th>
+                <th>Theme</th>
+                <th>Year</th>
+            </tr>
+            @foreach (var set in setList)
+            {
+                if (!IsVisible(set))
+                {
+                    continue;
+                }
+                <tr>
+                    <td>@set.SetName</td>
+                    <td>@set.NumParts</td>
+                    <td>@set.Theme</td>
+                    <td>@set.Year</td>
+                </tr>
+            }
+        </thead>
+    </table>
+}
+
+@code {
+    public class Set
+    {
+        public string SetName { get; set; }
+        public string NumParts { get; set; }
+        public string Theme { get; set; }
+        public string Year { get; set; }
+
+        public Set(string setName, string numParts, string theme, string year)
+        {
+            SetName = setName;
+            NumParts = numParts;
+            Theme = theme;
+            Year = year;
+        }
+    }
+
+    private List<Set>? setList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var sets = context.Sets;
+        var themes = context.Themes;
+
+        var setsByName = sets
+            .Join(themes, s => s.ThemeNameId, t => t.ThemeNameId, (s, t) => new { s, t })
+            .Select(x => new { x.s.Name, x.s.NumParts, ThemeName = x.t.Name, x.s.Year })
+            .OrderBy(x => x.Name);
+
+        setList = await setsByName
+            .Select(x => new Set(x.Name, x.NumParts, x.ThemeName, x.Year))
+            .ToListAsync();
+    }
+
+    public string Filter { get; set; }
+
+    public bool IsVisible(Set set)
+    {
+        if (string.IsNullOrEmpty(Filter))
+        {
+            return true;
+        }
+
+        if (set.SetName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (set.Theme.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
