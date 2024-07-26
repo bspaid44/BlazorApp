@@ -61,7 +61,7 @@ tr:hover {
 }
 
 .main-card:hover {
-    transform: scale(1.05) rotate(360deg);
-    transition: transform 0.35s;
+    transform: scale(1.05) rotate3d(0, 1, 1, 360deg);
+    transition: transform .75s;
 }
 

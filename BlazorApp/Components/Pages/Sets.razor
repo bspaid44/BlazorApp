@@ -14,9 +14,10 @@
 else
 {
     <div class="form-group">
-        <input class="form-control" type="text" placeholder="Filter for name" 
+        <input class="form-control col-4" type="text" placeholder="Filter for name" 
                 @bind="Filter" 
                 @bind:event="oninput" />
+
     </div>
 
     <table class="table table-hover">
@@ -78,7 +79,7 @@ else
             .ToListAsync();
     }
 
-    public string Filter { get; set; }
+    public string? Filter { get; set; }
 
     public bool IsVisible(Set set)
     {
