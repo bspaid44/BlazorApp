@@ -9,7 +9,10 @@
 
 @if (setList == null)
 {
-    <p><em>Loading...</em></p>
+    <div class="container row">
+        <p><em>Loading...</em></p>
+        <Spinner Color="SpinnerColor.Danger" Size="SpinnerSize.ExtraLarge" />
+    </div>
 }
 else
 {
